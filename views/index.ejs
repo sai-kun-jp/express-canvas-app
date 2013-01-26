@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+  	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="./index.html">Canvasの共有テスト</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+              	<form class="navbar-form">
+                	<input type="button" id="clear" class="btn" value="消去する" />
+            	</form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="position:relative; margin-top:60px;">
+    <canvas id="canvas-node" class="canvas" style="position: absolute; border:10px solid #dddddd; top:0; left:0; " width="640px" height="600px"></canvas>
+	</div>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
+  <script src="/javascripts/paint.js"></script>
+  <script type="text/javascript">
+  	$(function(){
+  		var paint = new Paint('canvas-node');
+
+  		// WebSocket対応
+  		if(window['WebSocket']){
+  			var connection = new WebSocket("ws://" + document.location.host + "/");
+  			paint.setConnection(connection);
+  		}else{
+  			alert('このブラウザはWebSocketに対応していません');
+  		}
+
+  		$('#clear').click(function(){
+  			paint.clear();
+  		});
+
+  	});
+  </script>
+  </body>
+</html>
